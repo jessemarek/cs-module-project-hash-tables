@@ -102,7 +102,10 @@ class HashTable:
         index = self.hash_index(key)
 
         # assign the value at the index to None (delete the value stored there)
-        self.table[index] = None
+        if self.table[index] is not None:
+            self.table[index] = None
+        else:
+            print('Warning: key not found in table!')
 
     def get(self, key):
         """
