@@ -9,6 +9,25 @@ class HashTableEntry:
         self.next = None
 
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def find(self, key):
+        # start at the head of the list
+        cur = self.head
+
+        # loop through each HashTableEntry until we find the key
+        while cur is not None:
+            if cur.key == key:
+                return cur.value
+
+            cur = cur.next
+
+        # if key not found return None
+        return None
+
+
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
@@ -21,9 +40,10 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
-        self.capacity = capacity
-        self.table = [None] * self.capacity
+    def __init__(self, capacity=MIN_CAPACITY):
+        self.capacity = capacity if capacity > MIN_CAPACITY else MIN_CAPACITY
+        self.table = [LinkedList()] * self.capacity
+        self.count = 0
 
     def get_num_slots(self):
         """
