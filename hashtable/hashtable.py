@@ -188,6 +188,14 @@ class HashTable:
         if self.table[index] is not None:
             self.table[index].delete(key)
             self.count -= 1
+            # check to see if a resize is needed
+            if self.get_load_factor() < 0.2:
+                # find new reduced capacity
+                new_capacity = self.capacity / 2
+
+                # if reduced capacity is >= to MIN_CAPACITY then we can resize
+                if new_capacity >= MIN_CAPACITY:
+                    self.resize(int(new_capacity))
         else:
             print('Warning: key not found in table!')
 
