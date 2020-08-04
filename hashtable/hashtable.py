@@ -36,7 +36,7 @@ class LinkedList:
         node.next = self.head
 
         # set the head to point to the newly added node
-        self.head - node
+        self.head = node
 
     # inserts a new HashTableEntry or overwrites the value if it exists
     def insert_or_overwrite(self, key, value):
@@ -51,8 +51,27 @@ class LinkedList:
             node.value = value
 
     def delete(self, key):
-        # code
-        pass
+        cur = self.head
+        # check if the node we are removing is the head
+        if cur.key == key:
+            # if it's the head move the head to the next node
+            self.head = cur.next
+
+            return cur
+
+        # keep track of the prev and cur nodes as we move through the list
+        prev = cur
+        cur = cur.next
+
+        while cur is not None:
+            if cur.key == key:
+                prev.next = cur.next
+
+                return cur
+
+            else:
+                prev = cur
+                cur = cur.next
 
 
 # Hash table can't have fewer than this many slots
@@ -136,7 +155,8 @@ class HashTable:
 
         # assign the value to that index in the list using
         # a HashTableEntry object
-        self.table[index] = HashTableEntry(key, value)
+        self.table[index].insert_or_overwrite(key, value)
+        self.count += 1
 
     def delete(self, key):
         """
@@ -151,7 +171,8 @@ class HashTable:
 
         # assign the value at the index to None (delete the value stored there)
         if self.table[index] is not None:
-            self.table[index] = None
+            self.table[index].delete(key)
+            self.count -= 1
         else:
             print('Warning: key not found in table!')
 
@@ -166,12 +187,14 @@ class HashTable:
         # find the index the key is stored in
         index = self.hash_index(key)
 
+        entry = self.table[index].find(key)
+
         # if nothing is stored at this index return None
-        if self.table[index] is None:
+        if entry is None:
             return None
         # return the value stored at that index in the list
         else:
-            return self.table[index].value
+            return entry.value
 
     def resize(self, new_capacity):
         """
