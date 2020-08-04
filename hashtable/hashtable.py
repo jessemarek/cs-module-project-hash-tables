@@ -203,7 +203,25 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # set a ref to the old table
+        old_table = self.table
+
+        # update the capacity with the new_capacity
+        self.capacity = new_capacity
+
+        # create a new empty table
+        self.table = [LinkedList()] * self.capacity
+
+        # reset the count
+        self.count = 0
+
+        # loop through all values in old table and insert into the new table
+        for i in old_table:
+            cur = i.head
+
+            while cur is not None:
+                self.put(cur.key, cur.value)
+                cur = cur.next
 
 
 if __name__ == "__main__":
