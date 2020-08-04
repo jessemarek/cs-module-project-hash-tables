@@ -153,10 +153,25 @@ class HashTable:
         # find the index the key will be stored at
         index = self.hash_index(key)
 
-        # assign the value to that index in the list using
-        # a HashTableEntry object
+        # check if the key already exists
+        entry = self.table[index].find(key)
+
+        if entry is not None:
+            # if it does overwrite the value
+            self.table[index].insert_or_overwrite(key, value)
+
+        else:
+            # otherwise increase the count of items in the table
+            self.count += 1
+
+            # check to see if a resize is needed
+            if self.get_load_factor() > 0.7:
+                self.resize(self.capacity * 2)
+                # update index for this key since it will be based of capacity
+                index = self.hash_index(key)
+
+        # insert the new item
         self.table[index].insert_or_overwrite(key, value)
-        self.count += 1
 
     def delete(self, key):
         """
