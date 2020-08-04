@@ -13,6 +13,8 @@ class LinkedList:
     def __init__(self):
         self.head = None
 
+    # find a HashTableEntry based on a given key if it exists
+    # and return the value
     def find(self, key):
         # start at the head of the list
         cur = self.head
@@ -20,12 +22,37 @@ class LinkedList:
         # loop through each HashTableEntry until we find the key
         while cur is not None:
             if cur.key == key:
-                return cur.value
+                # if we find the node return it
+                return cur
 
             cur = cur.next
 
         # if key not found return None
         return None
+
+    # adds a node to the head of the list
+    def insert_at_head(self, node):
+        # set the node's next to the head
+        node.next = self.head
+
+        # set the head to point to the newly added node
+        self.head - node
+
+    # inserts a new HashTableEntry or overwrites the value if it exists
+    def insert_or_overwrite(self, key, value):
+        # check to see if the key exists already
+        node = self.find(key)
+
+        # if the key doesn't exist make a new entry
+        if node is None:
+            self.insert_at_head(HashTableEntry(key, value))
+        # otherwise overwrite the value
+        else:
+            node.value = value
+
+    def delete(self, key):
+        # code
+        pass
 
 
 # Hash table can't have fewer than this many slots
@@ -63,7 +90,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # (load factor) = (number of elements) / (number of slots)
+        return self.count / self.capacity
 
     def fnv1(self, key):
         """
