@@ -101,7 +101,7 @@ class HashTable:
 
         Implement this.
         """
-        return len(self.table)
+        return self.capacity
 
     def get_load_factor(self):
         """
