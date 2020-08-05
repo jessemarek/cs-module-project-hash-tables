@@ -3,11 +3,12 @@ def word_count(s):
     d = {}
 
     # characters to ignore
-    ignore = ['"', ':', ';', ',', '.', '-', '+', '=', '/',
-              '\\', '|', '[', ']', '{', '}', '(', ')', '*', '^', '&']
+    ignore = '":;,.-+=/\\|[]{}()*^&'
 
+    # result of string after the ignored characters are removed
     r = ""
 
+    # remove the ignored characters
     for c in s:
         if c not in ignore:
             r += c
