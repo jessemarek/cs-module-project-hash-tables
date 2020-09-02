@@ -1,9 +1,21 @@
-# Your code here
+# cache to store computed values
+cache = {}
 
 
 def expensive_seq(x, y, z):
-    # Your code here
+    # base case
+    if x <= 0:
+        return y + z
 
+    # check cache for previously computed value
+    if (x, y, z) in cache:
+        return cache[(x, y, z)]
+
+    # if the value is not in the cache do the computation and store it
+    cache[(x, y, z)] = expensive_seq(x-1, y+1, z) + \
+        expensive_seq(x-2, y+2, z*2) + expensive_seq(x-3, y+3, z*3)
+
+    return cache[(x, y, z)]
 
 
 if __name__ == "__main__":
